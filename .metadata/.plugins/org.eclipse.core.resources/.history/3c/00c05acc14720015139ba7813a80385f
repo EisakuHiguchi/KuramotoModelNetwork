@@ -18,8 +18,14 @@ public class PointLabel extends JLabel implements MouseListener {
 		addMouseListener(this);
 	}
 	
-	public void disClicked() {
-		this.setForeground(Color.black);
+	public void clicked() {
+		
+		if(state) {
+			this.setForeground(Color.red);
+			state = false;
+		} else {
+			this.setForeground(Color.black);
+		}
 	}
 
 	@Override
@@ -38,7 +44,6 @@ public class PointLabel extends JLabel implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent arg0) {	
 		state = true;
-		this.setForeground(Color.red);
 	}
 
 	@Override

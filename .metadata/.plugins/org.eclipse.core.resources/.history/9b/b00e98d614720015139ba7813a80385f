@@ -18,7 +18,7 @@ public class PointLabel extends JLabel implements MouseListener {
 		addMouseListener(this);
 	}
 	
-	public void disClicked() {
+	public void clicked() {
 		this.setForeground(Color.black);
 	}
 

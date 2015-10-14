@@ -24,10 +24,5 @@ public class Kuramoto_Unit extends BA_Node {
 		k = new Kuramoto(w, dt, K);
 	}
 	
-	public double[] getPhj() {
-		double[] r = new double[getNode().size()];
-		for(int i = 0; i < r.length; i++) r[i] = getNode().get(i).getKuramoto().getPhase();
-		return r;
-	}
 	public Kuramoto getKuramoto() { return k; }
 }
