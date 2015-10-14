@@ -2,10 +2,13 @@ package BAModel;
 
 import java.util.ArrayList;
 
+import DataPlot.PointLabel;
+
 public class BA_Node {
 	
 	protected ArrayList<BA_Node> wired;
 	protected double[] point;
+	public PointLabel label;
 	
 	public BA_Node(double x, double y) {
 		init();
@@ -24,8 +27,9 @@ public class BA_Node {
 	
 	public void setPoint(double x, double y) { point[0] = x; point[1] = y; }
 	public void setNode(BA_Node n) { wired.add(n); }
+	public void setLabel(PointLabel p) { label = p; }
 	public double[] getPoint() { return point; }
 	public ArrayList<BA_Node> getNode() { return wired; }
 	public int getWireNum() { return wired.size(); }
-	
+	public PointLabel getLabel() { return label; }
 }

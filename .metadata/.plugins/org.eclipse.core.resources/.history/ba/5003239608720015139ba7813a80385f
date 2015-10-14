@@ -1,0 +1,9 @@
+package DataPlot;
+
+import javax.swing.JLabel;
+
+public class PointLabel extends JLabel {
+	
+	
+	
+}

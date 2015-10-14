@@ -6,22 +6,24 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import BAModel.BA_Node;
 
 
-public class DataPlot extends JPanel {	
+public class DataPlot extends JPanel implements Runnable{	
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	ArrayList<BA_Node> n;
+	Thread thread = null;
 	
 	public DataPlot(){
 		super();
+		thread = new Thread(this);
+		thread.start();
 	}
 	
 	@Override
@@ -34,27 +36,32 @@ public class DataPlot extends JPanel {
 
 			for(BA_Node e: n) {
 				ArrayList<BA_Node> wire = e.getNode();
-				JLabel p = new JLabel();
+				this.add(e.getLabel());
 				double[] np = e.getPoint();
-
-				p.setForeground(Color.BLACK);
-				p.setText("Åú");
-				p.setBounds((int)np[0] - 7,
-						(int)np[1] - 10, 20, 20);
-				this.add(p);
-
+				if(e.getLabel().state) g2.setColor(Color.red);
+				
 				for(BA_Node u: wire) {
 					double[] loc = u.getPoint();
 					g2.drawLine((int)np[0], (int)np[1], (int)loc[0], (int)loc[1]);
 				}
+				g2.setColor(Color.black);
 			}
 			g2.dispose();
 		}
 	}
 	
+	
+	
 	public void drawBANode(ArrayList<BA_Node> n) {
 		this.n = n;
 		repaint();
+	}
+
+	@Override
+	public void run() {
+		while(true) {
+			repaint();
+		}
 	}
 	
 
