@@ -32,9 +32,11 @@ public class Kuramoto_DataPlot extends DataPlot implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		knm.nextStep();
 		knm.calcValue();
+		knm.checkWire();
 		for(double d : knm.getOrderPrm()) {
 //		for(double d: knm.getUnitData_Array_Phase()) {
 			System.out.println(d);
 		}
+		this.repaint();
 	}
 }

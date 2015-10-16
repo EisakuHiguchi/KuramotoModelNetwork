@@ -31,6 +31,7 @@ public class DataPlot extends JPanel implements Runnable{
 		if(n != null) {
 			this.setLayout(null);
 			Graphics2D g2 = (Graphics2D)g.create();
+			g.clearRect(0, 0, 800, 800);
 			g2.setStroke(new BasicStroke(3f));
 			g2.setPaint(Color.black);			
 

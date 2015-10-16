@@ -8,22 +8,23 @@ import KuramotoUnit.Kuramoto;
 public class Kuramoto_Unit extends BA_Node {
 	
 	protected Kuramoto k;
-	
+	double delta = 0.01;
 	
 	public Kuramoto_Unit(double x, double y,
-			double w, double dt, double K) {
-		super(x,y);
-		Kuramoto_Init(w, dt, K);
-	}
-	
+			double w, double dt, double K) { super(x,y); Kuramoto_Init(w, dt, K); }
 	public Kuramoto_Unit(double[] xy, 
-			double w, double dt, double K) {
-		super(xy);
-		Kuramoto_Init(w, dt, K);
+			double w, double dt, double K) { super(xy);	Kuramoto_Init(w, dt, K);}
+	private void Kuramoto_Init(double w, double dt, double K) { k = new Kuramoto(w, dt, K); }
+	
+	public void checkWired() {
+		for(Kuramoto_Unit e: getWiredUnit()) {
+			if(getOrderPrm(e) < 0.9) cutWire(e);
+//			else enhanceBondPrm(e);
+		}
 	}
 	
-	private void Kuramoto_Init(double w, double dt, double K) {
-		k = new Kuramoto(w, dt, K);
+	public void enhanceBondPrm(Kuramoto_Unit e) {
+		k.setBondPrm(k.getBondPrm() + delta);
 	}
 	
 	public double[] getPhj() {
@@ -32,8 +33,14 @@ public class Kuramoto_Unit extends BA_Node {
 		return r;
 	}
 	
-	public void nextStep() {
-		for(Kuramoto_Unit e: getWiredUnit()) e.getKuramoto().nextStep(getPhj()); }
+	public void nextStep() { for(Kuramoto_Unit e: getWiredUnit()) e.getKuramoto().nextStep(getPhj()); }
+	
+	public double getOrderPrm(Kuramoto_Unit e) {
+		double phj = e.getKuramoto().getPhase();
+		double x = Math.sin(k.getPhase()) + Math.sin(phj);
+		double y = Math.cos(k.getPhase()) + Math.cos(phj);
+		return Math.abs(Math.sqrt(x*x + y*y));
+	}
 	
 	public double getOrderPrm() {
 		double x = 0;
@@ -53,5 +60,6 @@ public class Kuramoto_Unit extends BA_Node {
 		return unit;
 	}
 	
+	public void cutWire(BA_Node e) { getNode().remove(e); }
 	public Kuramoto getKuramoto() { return k; }
 }

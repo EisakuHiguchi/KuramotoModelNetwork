@@ -1,0 +1,98 @@
+package KuramotoNetwork;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Random;
+
+import BAModel.BA_Node;
+import BAModel.NodeManage;
+import DataPlot.PointLabel;
+
+public class KuramotoNetWork_Manage extends NodeManage {
+	
+	double dt, w, K;
+	public KuramotoNetWork_Manage(int distance, int size,
+			double dt, double K) {
+		allNode = new ArrayList<>();
+		x = 0; y = 0; len = 0; count = 1;
+		this.distance = size / (Math.sqrt(distance + 4) + 3);
+		
+		this.dt = dt;
+		this.K = K;
+		Random r = new Random();
+		w = r.nextDouble();
+		init();
+		w = 0;
+	}
+	
+	@Override
+	public void addNewNode() {
+		Kuramoto_Unit n = createNode();
+		for(BA_Node e: allNode) { n.setNode(e); }
+	}
+	
+	@Override
+	public Kuramoto_Unit createNode() {
+		Random r = new Random();
+		w = r.nextDouble();
+		Kuramoto_Unit n = new Kuramoto_Unit(getNext(), w, dt, K);
+		PointLabel p = new PointLabel();
+		double[] np = n.getPoint();
+
+		p.setForeground(Color.BLACK);
+		p.setText("Åú");
+		p.setBounds((int)np[0] - 7,	(int)np[1] - 10, 20, 20);
+
+		n.setLabel(p);
+		allNode.add(n);
+		return n;
+	}
+	
+	private void init() {
+		for(int i = 0; i < 4; i++) createNode();
+		for(int i = 0; i < allNode.size(); i++) {
+			BA_Node n1 = allNode.get(i);
+			for(int j = 0; j < allNode.size(); j++) {
+				BA_Node n2 = allNode.get(j);
+				if(i != j) n1.setNode(n2);
+			}
+		}
+	}
+	
+	public ArrayList<Kuramoto_Unit> getAllKuramotoUnit() {
+		ArrayList<Kuramoto_Unit> res = new ArrayList<>();
+		for(BA_Node e: allNode) {
+			res.add((Kuramoto_Unit)e);
+		}
+		return res; 
+	}
+	
+	public void checkWire() { for(Kuramoto_Unit u: getAllKuramotoUnit()) u.checkWired(); }
+	
+	public void nextStep() {
+		for(Kuramoto_Unit u: getAllKuramotoUnit()) u.nextStep(); 
+	}
+	
+	public ArrayList<Double> getOrderPrm() {
+		ArrayList<Double> res = new ArrayList<>();
+		for(Kuramoto_Unit e: getAllKuramotoUnit()) res.add(e.getOrderPrm());
+		return res;		
+	}
+
+	public String getUnitData_Str_Phase() {
+		String res = "";
+		for(Kuramoto_Unit u : getAllKuramotoUnit()) res = res + u.getKuramoto().getPhase() + " ";
+		return res;
+	}
+	
+	public ArrayList<Double> getUnitData_Array_Phase() {
+		ArrayList<Double> array = new ArrayList<>();
+		for(Kuramoto_Unit u: getAllKuramotoUnit()) array.add(u.getKuramoto().getPhase());
+		return array;
+	}
+	
+	public void calcValue() { for(Kuramoto_Unit u: getAllKuramotoUnit()) u.getKuramoto().calcValue(); }
+	public Kuramoto_Unit getUnit(int index) { return getAllKuramotoUnit().get(index); }
+	
+	
+}

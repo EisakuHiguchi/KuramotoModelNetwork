@@ -67,9 +67,9 @@ public class KuramotoNetWork_Manage extends NodeManage {
 		return res; 
 	}
 	
-	public void nextStep() {
-		for(Kuramoto_Unit u: getAllKuramotoUnit()) u.nextStep(); 
-	}
+	public void checkWire() { for(Kuramoto_Unit u: getAllKuramotoUnit()) u.checkWired(); }
+	
+	public void nextStep() { for(Kuramoto_Unit u: getAllKuramotoUnit()) u.nextStep(); }
 	
 	public ArrayList<Double> getOrderPrm() {
 		ArrayList<Double> res = new ArrayList<>();

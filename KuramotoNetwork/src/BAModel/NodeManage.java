@@ -29,6 +29,7 @@ public class NodeManage {
 		for(BA_Node e: allNode) {
 			if(r.nextInt(allwire) > (allwire - e.getWireNum())) {
 				n.setNode(e);
+				e.setNode(n);
 			}
 		}
 	}

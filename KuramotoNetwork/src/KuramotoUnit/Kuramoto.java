@@ -9,6 +9,7 @@ public class Kuramoto {
 		rk = new rungekutta(dt, K);
 		setWavePrm(w);
 	}
+	public void setBondPrm(double prm) { rk.setBand(prm); }
 	public void setThisPhase(double prm) { rk.setThisPhase(prm); }
 	public void setWavePrm(double prm) { rk.setNaturalPhase(prm); }
 	public void setRKPrm(double[] phj) { rk.setParameter(phj); }
@@ -17,4 +18,5 @@ public class Kuramoto {
 	public void nextStep(double[] phj) { rk.setParameter(phj); nextStep(); }
 	public double getPhase() {return rk.getThisPhase(); }
 	public double getWavePrm() { return rk.getNaturalPhase(); }
+	public double getBondPrm() { return rk.getBand(); }
 }
