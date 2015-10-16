@@ -33,6 +33,8 @@ public class KuramotoNetWork_Manage extends NodeManage {
 	
 	@Override
 	public Kuramoto_Unit createNode() {
+		Random r = new Random();
+		w = r.nextDouble();
 		Kuramoto_Unit n = new Kuramoto_Unit(getNext(), w, dt, K);
 		PointLabel p = new PointLabel();
 		double[] np = n.getPoint();
@@ -66,25 +68,15 @@ public class KuramotoNetWork_Manage extends NodeManage {
 	}
 	
 	public void nextStep() {
-		for(Kuramoto_Unit u: getAllKuramotoUnit()) u.getKuramoto().nextStep(getPhj()); }
-	
-	public double getOrderPrm() {
-		double x = 0;
-		double y = 0;
-		double[] phj = getPhj();
-		
-		for(int i = 0; i < phj.length; i++) {
-			x = x + Math.sin(phj[i]);
-			y = y + Math.cos(phj[i]);
-		}
-		return Math.abs(Math.sqrt(x*x + y*y)) / phj.length;
+		for(Kuramoto_Unit u: getAllKuramotoUnit()) u.nextStep(); 
 	}
 	
-	public double[] getPhj() {
-		double[] r = new double[getAllKuramotoUnit().size()];
-		for(int i = 0; i < r.length; i++) r[i] = getAllKuramotoUnit().get(i).getKuramoto().getPhase();
-		return r;
+	public ArrayList<Double> getOrderPrm() {
+		ArrayList<Double> res = new ArrayList<>();
+		for(Kuramoto_Unit e: getAllKuramotoUnit()) res.add(e.getOrderPrm());
+		return res;		
 	}
+
 	public String getUnitData_Str_Phase() {
 		String res = "";
 		for(Kuramoto_Unit u : getAllKuramotoUnit()) res = res + u.getKuramoto().getPhase() + " ";

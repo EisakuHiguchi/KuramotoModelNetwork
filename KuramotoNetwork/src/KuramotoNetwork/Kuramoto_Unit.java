@@ -1,5 +1,7 @@
 package KuramotoNetwork;
 
+import java.util.ArrayList;
+
 import BAModel.BA_Node;
 import KuramotoUnit.Kuramoto;
 
@@ -26,8 +28,30 @@ public class Kuramoto_Unit extends BA_Node {
 	
 	public double[] getPhj() {
 		double[] r = new double[getNode().size()];
-		for(int i = 0; i < r.length; i++) r[i] = getNode().get(i).getKuramoto().getPhase();
+		for(int i = 0; i < r.length; i++) r[i] = getWiredUnit().get(i).getKuramoto().getPhase();
 		return r;
 	}
+	
+	public void nextStep() {
+		for(Kuramoto_Unit e: getWiredUnit()) e.getKuramoto().nextStep(getPhj()); }
+	
+	public double getOrderPrm() {
+		double x = 0;
+		double y = 0;
+		double[] phj = getPhj();
+		
+		for(int i = 0; i < phj.length; i++) {
+			x = x + Math.sin(phj[i]);
+			y = y + Math.cos(phj[i]);
+		}
+		return Math.abs(Math.sqrt(x*x + y*y)) / phj.length;
+	}
+	
+	public ArrayList<Kuramoto_Unit> getWiredUnit() {
+		ArrayList<Kuramoto_Unit> unit = new ArrayList<>();
+		for(BA_Node e: getNode()) unit.add((Kuramoto_Unit)e);
+		return unit;
+	}
+	
 	public Kuramoto getKuramoto() { return k; }
 }

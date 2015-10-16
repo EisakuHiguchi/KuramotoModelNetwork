@@ -4,33 +4,26 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import BAModel.BA_Node;
 
 
-public class DataPlot extends JPanel implements Runnable, ActionListener{	
+public class DataPlot extends JPanel implements Runnable{	
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ArrayList<BA_Node> n;
+	protected ArrayList<? extends BA_Node> n;
 	Thread thread = null;
 	
 	public DataPlot(){
 		super();
 		thread = new Thread(this);
 		thread.start();
-
-		JButton button1 = new JButton("next");
-		button1.setBounds(0, 0, 100, 10);
-		add(button1);
 	}
 	
 	@Override
@@ -57,25 +50,13 @@ public class DataPlot extends JPanel implements Runnable, ActionListener{
 		}
 	}
 	
-	
-	
-	public void drawBANode(ArrayList<BA_Node> n) {
+	public <E extends BA_Node> void drawBANode(ArrayList<E> n) {
 		this.n = n;
 		repaint();
 	}
 
 	@Override
-	public void run() {
-		while(true) {
-			repaint();
-		}
-	}
+	public void run() { while(true) repaint(); }
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 }

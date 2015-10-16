@@ -3,6 +3,7 @@ package DataPlot;
 import javax.swing.JFrame;
 
 import KuramotoNetwork.KuramotoNetWork_Manage;
+import KuramotoNetwork.Kuramoto_DataPlot;
 
 public class Main extends JFrame {
 
@@ -35,8 +36,8 @@ public class Main extends JFrame {
 		frame.setSize(size, size);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		DataPlot dp = new DataPlot();
-		dp.drawBANode(nm.getAllNode());
+		Kuramoto_DataPlot dp = new Kuramoto_DataPlot(nm);
+//		dp.drawBANode(nm.getAllNode());
 		
 		dp.setVisible(true);
 		dp.repaint();

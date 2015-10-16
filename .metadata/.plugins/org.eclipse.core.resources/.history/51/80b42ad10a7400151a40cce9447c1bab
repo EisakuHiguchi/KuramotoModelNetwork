@@ -1,0 +1,24 @@
+package KuramotoNetwork;
+
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
+import DataPlot.DataPlot;
+
+public class Kuramoto_DataPlot extends DataPlot{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public Kuramoto_DataPlot() {
+		super();
+		n = e;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
+	}
+}
