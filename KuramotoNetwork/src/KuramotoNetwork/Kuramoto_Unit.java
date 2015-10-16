@@ -9,6 +9,7 @@ public class Kuramoto_Unit extends BA_Node {
 	
 	protected Kuramoto k;
 	double delta = 0.01;
+	double border = 0.9;
 	
 	public Kuramoto_Unit(double x, double y,
 			double w, double dt, double K) { super(x,y); Kuramoto_Init(w, dt, K); }
@@ -17,13 +18,14 @@ public class Kuramoto_Unit extends BA_Node {
 	private void Kuramoto_Init(double w, double dt, double K) { k = new Kuramoto(w, dt, K); }
 	
 	public void checkWired() {
-		for(Kuramoto_Unit e: getWiredUnit()) {
-			if(getOrderPrm(e) < 0.9) cutWire(e);
-//			else enhanceBondPrm(e);
-		}
+		if(getOrderPrm() < border) {
+			for(Kuramoto_Unit e: getWiredUnit()) {
+				if(getOrderPrm(e) < border) cutWire(e);
+			}
+		} else enhanceBondPrm();
 	}
 	
-	public void enhanceBondPrm(Kuramoto_Unit e) {
+	public void enhanceBondPrm() {
 		k.setBondPrm(k.getBondPrm() + delta);
 	}
 	
